@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn vuejs3</title>
+    <!-- using cdn to run vue3 -->
+    <script src="https://unpkg.com/vue@3.0.2/dist/vue.global.js"></script>
+
+    <!-- in order to use vue/cli we need to install node
+     verify if node is installed with cmd node -v 
+     if you get version 
+    the install vue/cli with cmd  npm install -g @vue/cli -->
+    <script src="app.js" defer></script>
+    <style>
+        body{
+            background: #eee;
+            max-width: 960px;
+            margin: 20px auto;
+        }
+        .box{
+            padding: 100px 0;
+            width: 400px;
+            text-align: center;
+            background: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+
+        p,ul,h3,h4,h1{
+            padding: 0;
+            margin: 0;
+        }
+
+        li{
+            list-style: none;
+            background: #fff;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        li.fav{
+            background: #ff9ed2;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello, vue</h1>
+    <div id="app">
+
+
+        <!-- computed properties -->
+
+        <p>{{ filteredBooks }}</p>
+         
+        <!-- attribute binding - refer to binding attribute with dynamic value -->
+          <!-- use v-bind:href="url" or :href="url" so url is dynamic -->
+        <a :href="url">best website ever</a>
+
+        <!-- <h2>I am a template now</h2> -->
+
+        <!-- use curly braces only when you output data -->
+
+        <h2>{{ title }}</h2>
+        <p>{{ author }} - {{ age }}</p>
+
+        <!-- we donot need curly braces inside directive  -->
+        <button v-on:click="age++">increase age</button>
+        <button v-on:click="age--">decrease age</button>
+        <!-- shortcut for v-on is @ -->
+
+        <!-- <div @click="title = 'something else' ">change book title</div> -->
+
+        <!-- <div @click="changeTitle">change book title</div> -->
+
+        <div @click="changeTitle('Oathbringer')">change book title</div>
+
+        <!--  conditional rendering -->
+
+        <!-- if true show innerHTML else do not show -->
+
+        <div v-if="showBooks">
+            <!-- <p> {{ title }} - {{ author }} - {{ age }}</p> -->
+             
+            <!-- use of index in array can be  done when you have few data -->
+             <h3>use of index in array</h3>
+            <p>{{ books[0].title }} - {{ books[0].author }}</p>
+
+            <p>{{ books[1].title }} - {{ books[1].author }}</p>
+            <p>{{ books[2].title }} - {{ books[2].author }}</p>
+
+           <!-- use of v-for  for iterating through collection of data-->
+            <h3>use of v-for</h3>
+            <ul>
+
+                <!-- dynamic classes
+                give element a class based on condition 
+                ie condition true the
+                element will obtain the class 
+                when false the element will not have the class -->
+                
+                <!-- a class have object with key, value pair
+                where by key is a class we want to add
+                and value is condition
+                :class="{key:condition}" -->
+
+
+                <li v-for="book in filteredBooks" :class="{ fav: book.isFav }"  @click="toggleFav(book)">
+                    <img :src="book.img" :alt="book.title">
+                    <h4>{{ book.title }}</h4>
+                    <p> {{ book.author }}</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- toggle showBooks -->
+         <button @click="toggleShowBooks">
+            <!-- if the books are shown you have to hide -->
+
+             <!-- v-if remove element from the dom when condition is false
+             and when condition is true inject element in the dom 
+              so this is time consuming -->
+            <span v-if="showBooks">Hide Books</span>
+            <!-- if the books are hidden you have to show -->
+
+            <!-- <span v-if="!showBooks">Show Books</span> -->
+            <span v-else>Show Books</span>
+         </button>
+
+         <!-- v-show only hide element with css display: none; when condition is false -->
+         <div v-show="showBooks">Currently showing books</div> 
+
+         <br>
+         <!-- mouse events -->
+
+         <!-- passing event, data as arguments -->
+          <div class="box" @mouseover="handleEvent($event,5)">mouseover (enter)</div>
+
+          <div class="box" @mouseleave="handleEvent">mouseleave</div>
+          <div class="box" @dblclick="handleEvent">doublecick</div>
+          <div class="box" @mousemove="handleMouseMove">position x: {{ x }} - y: {{ y }}</div>
+    </div>
+
+   
+</body>
+
+</html>
